@@ -1,9 +1,10 @@
 # SPDX-License-Identifier: MIT
-# Copyright (C) 2021 Roland Csaszar
+# Portions (C) 2023 Jeremy Mahler
+# Original codebase (C) 2021 Roland Csaszar
 #
-# Project:  tzolkin-calendar
+# Project:  mayan-calendar
 # File:     __init__.py
-# Date:     19.Mar.2021
+# Date:     7.Sep.2023
 ###############################################################################
 
 from __future__ import annotations
@@ -52,13 +53,41 @@ if sys.version_info.major >= 3 and sys.version_info.minor >= 8:
 
     TzolkinNumber = Literal[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
     TzolkinNameNumber = Literal[
-        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20
+        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+
+    TdayNumbers = Dict[TzolkinNumber, str]
+    TdayNames = Dict[TzolkinNameNumber, str]
+    TdayGlyphs = Dict[TzolkinNameNumber, str]
+
+    HaabName = Literal[
+        "Pop",
+        "Woʼ",
+        "Sip",
+        "Sotzʼ",
+        "Tzek",
+        "Xul",
+        "Yaxkʼin",
+        "Mol",
+        "Chʼen",
+        "Yax",
+        "Sakʼ",
+        "Keh",
+        "Mak",
+        "Kʼankʼin",
+        "Muwanʼ",
+        "Pax",
+        "Kʼayab",
+        "Kumkʼu",
+        "Wayebʼ",
     ]
 
-    DayNumbers = Dict[TzolkinNumber, str]
-    DayNames = Dict[TzolkinNameNumber, str]
-    DayGlyphs = Dict[TzolkinNameNumber, str]
+    HaabNumber = Literal[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+    HaabNameNumber = Literal[
+        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
 
+    HdayNumbers = Dict[HaabNumber, str]
+    HdayNames = Dict[HaabNameNumber, str]
+    HdayGlyphs = Dict[HaabNameNumber, str]
 
 ################################################################################
 class TzolkinDate(NamedTuple):
