@@ -1,11 +1,12 @@
 # SPDX-License-Identifier: MIT
-# Copyright (C) 2021 Roland Csaszar
+# Portions (C) 2023 Jeremy Mahler
+# Original codebase (C) 2021 Roland Csaszar
 #
-# Project:  tzolkin-calendar
+# Project:  mayan-calendar
 # File:     calculate.py
-# Date:     19.Mar.2021
+# Date:     7.Sep.2023
 ###############################################################################
-"""This modules holds functions needed to calculate with Tzolkin calendar dates and
+"""This modules holds functions needed to calculate with Tzolkin and Haab calendar dates and
 convert them to and from gregorian dates.
 
 Example:
@@ -41,17 +42,20 @@ from __future__ import annotations
 import datetime
 from typing import Dict, List, Tuple
 
-from tzolkin_calendar import (
+from mayan_calendar import (
     REFERENCE_DATES,
     USED_DATEFMT,
     TzolkinDate,
-    day_names,
-    day_numbers,
+    HaabDate,
+    tday_names,
+    tday_numbers,
+    hday_names,
+    hday_numbers,
 )
 
 
 ################################################################################
-def makeLookUpTable() -> Dict[int, TzolkinDate]:
+def makeLookUpTableT() -> Dict[int, TzolkinDate]:
     """Return a dictionary holding all `TzolkinDate` instances of a tzolkin year.
     The tzolkin year consists of all combinations of `day_names` and `ay_numbers`,
     `day_numbers` are the numbers from 1 to 13 and `day_names` the names from
@@ -63,11 +67,32 @@ def makeLookUpTable() -> Dict[int, TzolkinDate]:
                                 tzolkin year (of 260 days).
     """
     ret_val: Dict[int, TzolkinDate] = {}
-    num_elems = len(day_names) * len(day_numbers)
-    for day in range(0, num_elems):
+    tnum_elems = len(tday_names) * len(tday_numbers)
+    for tday in range(0, tnum_elems):
         tz_name = calculateTzolkinName(start_name=1, to_add=day)
         tz_number = calculateTzolkinNumber(start_number=1, to_add=day)
-        ret_val[day + 1] = TzolkinDate(name=tz_name, number=tz_number)
+        ret_val[tday + 1] = TzolkinDate(name=tz_name, number=tz_number)
+
+    return ret_val
+
+################################################################################
+def makeLookUpTableH() -> Dict[int, HaabDate]:
+    """Return a dictionary holding all `HaabDate` instances of a Haab year.
+    The haab year consists of all combinations of `day_names` and `day_numbers`,
+    `day_numbers` are the numbers from 0 to 19 and `day_names` the names from
+    'Pop' to 'Wayeb'. So a Tzolkin year is: 0 Pop', 2 Pop', 3 Ak'b'al, ... and
+    finishes at 19 Kum'ku and finally 1-5 Wayeb.
+
+    Returns:
+        Dict[int, HaabDate]: The dictionary of all tzolkin date combinations in a
+                                tzolkin year (of 365 days).
+    """
+    ret_val: Dict[int, HaabDate] = {}
+    hnum_elems = len(hday_names) * len(hday_numbers) + 5
+    for hday in range(0, num_elems):
+        h_name = calculateHaabName(start_name=1, to_add=hday)
+        h_number = calculateHaabNumber(start_number=1, to_add=hday)
+        ret_val[hday + 1] = HaabDate(name=tz_name, number=h_number)
 
     return ret_val
 
